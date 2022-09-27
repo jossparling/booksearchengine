@@ -9,7 +9,6 @@ const resolvers = {
         const userData = await User.findOne({ _id: context.user._id })
           .select('-__v -password')
           .populate('books')
-          .populate('friends');
 
         return userData;
       }
@@ -20,12 +19,10 @@ const resolvers = {
       return User.find()
         .select('-__v -password')
         .populate('books')
-        .populate('friends');
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select('-__v -password')
-        .populate('friends')
         .populate('books');
     },
     books: async (parent, { username }) => {
@@ -75,11 +72,11 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    addReaction: async (parent, { bookId, reactionBody }, context) => {
+    addBook: async (parent, { bookId, bookBody }, context) => {
       if (context.user) {
         const updatedBook = await Book.findOneAndUpdate(
           { _id: bookId },
-          { $push: { reactions: { reactionBody, username: context.user.username } } },
+          { $push: { books: { bookBody, username: context.user.username } } },
           { new: true, runValidators: true }
         );
 

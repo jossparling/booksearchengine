@@ -5,25 +5,17 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    friendCount: Int
-    books: [Book]
-    friends: [User]
+    bookCount: Int
+    savedBooks: [Book]
   }
 
   type Book {
-    _id: ID
-    bookText: String
-    createdAt: String
-    username: String
-    reactionCount: Int
-    reactions: [Reaction]
-  }
-
-  type Reaction {
-    _id: ID
-    reactionBody: String
-    createdAt: String
-    username: String
+    bookId: ID
+    authors: String
+    description: String
+    title: String
+    image: String
+    link: String
   }
 
   type Auth {
@@ -43,8 +35,6 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     addBook(bookText: String!): Book
-    addReaction(bookId: ID!, reactionBody: String!): Book
-    addFriend(friendId: ID!): User
   }
 `;
 
